@@ -1,20 +1,42 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { auth, GoogleAuthProvider } from "../../confing/firebase";
+import React, { useState, useEffect } from "react";
+
+import { auth, GoogleAuthProvider, db } from "../../confing/firebase";
 import { useNavigate } from "react-router-dom";
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
+import GImg from "../../confing/gImg.png";
+import { signInWithPopup } from "firebase/auth";
+import { Timestamp, doc, setDoc } from "firebase/firestore";
 
 function HomePage() {
   let navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
+  const [ipDetails, setIpDetails] = useState([]);
+  useEffect(() => {
+    fetch("https://ipapi.co/json/")
+      .then(function (response) {
+        response.json().then((jsonData) => {
+          setIpDetails(jsonData);
+          // console.log(jsonData);
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [""]);
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
+      const { user } = await signInWithPopup(auth, googleProvider);
+      console.log(user);
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        name: user.displayName,
+        email: user.email,
+
+        createdAt: Timestamp.fromDate(new Date()),
+        isOnline: true,
+        isBlocked: false,
+        privateData: ipDetails,
+      });
 
       await navigate("/profile", { replace: true });
     } catch (err) {
@@ -23,16 +45,29 @@ function HomePage() {
   };
   return (
     <div>
-      <main>
+      <main
+        style={{
+          background: "#fff",
+          padding: 10,
+          borderRadius: 10,
+        }}
+      >
+        <p
+          style={{
+            textAlign: "center",
+          }}
+        >
+          <img width={36} src={GImg} alt="" />
+        </p>
         <h3>Google Auth with Firebase And React</h3>
 
         <div className="levbitz_home_auth_btn">
-          <span>
-            <button onClick={signInWithGoogle}>Cintinue With Google</button>
-          </span>
-
-          <span>
-            <Link to="/profile">Profile</Link>
+          <span
+            style={{
+              textAlign: "center",
+            }}
+          >
+            <button onClick={signInWithGoogle}>Continue With Google</button>
           </span>
         </div>
       </main>

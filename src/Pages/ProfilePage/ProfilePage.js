@@ -1,15 +1,25 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/auth";
+import { auth } from "../../confing/firebase";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
   const { user } = useContext(AuthContext);
-  console.log(user);
+  const navigate = useNavigate;
+
   return (
     <div>
-      ProfilePage
       {user ? (
-        <main>
+        <main
+          style={{
+            background: "#fff",
+            borderRadius: 10,
+            padding: 10,
+          }}
+        >
           <div>
+            <h3> ProfilePage</h3>
             <h4>Hello {user.displayName}</h4>
             <h5>Your email is {user.email}</h5>
             <p>
@@ -22,6 +32,17 @@ function ProfilePage() {
               />
             </p>
             <p>User Id {user.uid}</p>
+
+            <a
+              className="levbitz_source_code"
+              href="https://github.com/Levbitz/google-auth-firebase-and-react-"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Get Source Code
+            </a>
+
+            <button onClick={async () => signOut(auth)}>Logout</button>
           </div>
         </main>
       ) : null}

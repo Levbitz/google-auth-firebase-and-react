@@ -9,6 +9,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  background-color: #e2e8f0;
 }
 
 code {
@@ -18,11 +19,40 @@ code {
 
 .levbitz_home_auth_btn {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .levbitz_home_auth_btn a {
   text-decoration: none;
   text-transform: capitalize;
   font-weight: bold;
+}
+
+.levbitz_source_code {
+  font-weight: bold !important;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.levbitz_home_link {
+  display: block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+button {
+  outline: none;
+  font-size: 18px;
+  background-color: #65d2a5;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border-top: 1px red solid;
+}
+
+a {
+  display: block;
+  margin-top: 10px;
 }
