@@ -1,5 +1,5 @@
 
-![alt text](https://cdn-icons-png.flaticon.com/512/300/300221.png)
+![alt text](https://github.com/Levbitz/google-auth-firebase-and-react/blob/main/src/confing/gImg.png)
 
 # Getting Started with Create React App
 
